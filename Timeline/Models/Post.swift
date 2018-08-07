@@ -14,7 +14,7 @@ class Post {
     // MARK: - Properties
     let photoData: Data?
     let timestamp: Date
-    let comments: [Comment]
+    var comments: [Comment]
     var photo: UIImage {
         guard let data = photoData, let image = UIImage(data: data) else { return UIImage(named: "photo")! }
         return image

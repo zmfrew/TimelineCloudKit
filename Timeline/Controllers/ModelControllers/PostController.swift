@@ -6,7 +6,7 @@
 //  Copyright © 2018 Zachary Frew. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CloudKit
 
 class PostController {
@@ -18,8 +18,20 @@ class PostController {
     var posts: [Post] = []
     
     // MARK: - Methods
-    func addComment(toPost: Post, withText text: String, completion: @escaping (_ success: Bool) -> Comment) {
-        
+    func addComment(toPost post: Post, withText text: String, completion: @escaping (Comment?) -> Void) {
+        let comment = Comment(text: text, post: post)
+        post.comments.append(comment)
+        completion(comment)
     }
     
+    func createPostWith(image: UIImage, andCaption text: String, completion: @escaping (Post?) -> Void) {
+        guard let imageData = UIImageJPEGRepresentation(image, 1) else { return }
+        let post = Post(photoData: imageData)
+        addComment(toPost: post, withText: text) { (comment) in
+            print(comment ?? "No comment posted.")
+        }
+        completion(post)
+    }
+ 
 }
+
