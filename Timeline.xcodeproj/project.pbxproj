@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		B622A371211A4E3700D71B6A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B622A370211A4E3600D71B6A /* CloudKit.framework */; };
+		B622A373211A4F7500D71B6A /* PostListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622A372211A4F7500D71B6A /* PostListTableViewController.swift */; };
+		B622A375211A502E00D71B6A /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622A374211A502E00D71B6A /* PostDetailTableViewController.swift */; };
+		B622A377211A509C00D71B6A /* AddPostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622A376211A509C00D71B6A /* AddPostTableViewController.swift */; };
+		B622A379211A513300D71B6A /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622A378211A513300D71B6A /* SearchResultsTableViewController.swift */; };
 		B62C48E6211A4DB200243FE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62C48E5211A4DB200243FE1 /* AppDelegate.swift */; };
 		B62C48EB211A4DB200243FE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62C48E9211A4DB200243FE1 /* Main.storyboard */; };
 		B62C48ED211A4DB300243FE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62C48EC211A4DB300243FE1 /* Assets.xcassets */; };
@@ -17,6 +21,10 @@
 /* Begin PBXFileReference section */
 		B622A36E211A4E3500D71B6A /* Timeline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Timeline.entitlements; sourceTree = "<group>"; };
 		B622A370211A4E3600D71B6A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		B622A372211A4F7500D71B6A /* PostListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListTableViewController.swift; sourceTree = "<group>"; };
+		B622A374211A502E00D71B6A /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
+		B622A376211A509C00D71B6A /* AddPostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostTableViewController.swift; sourceTree = "<group>"; };
+		B622A378211A513300D71B6A /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
 		B62C48E2211A4DB200243FE1 /* Timeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62C48E5211A4DB200243FE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B62C48EA211A4DB200243FE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -120,6 +128,10 @@
 		B62C48FC211A4DD200243FE1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				B622A372211A4F7500D71B6A /* PostListTableViewController.swift */,
+				B622A374211A502E00D71B6A /* PostDetailTableViewController.swift */,
+				B622A378211A513300D71B6A /* SearchResultsTableViewController.swift */,
+				B622A376211A509C00D71B6A /* AddPostTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -214,6 +226,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B62C48E6211A4DB200243FE1 /* AppDelegate.swift in Sources */,
+				B622A373211A4F7500D71B6A /* PostListTableViewController.swift in Sources */,
+				B622A379211A513300D71B6A /* SearchResultsTableViewController.swift in Sources */,
+				B622A377211A509C00D71B6A /* AddPostTableViewController.swift in Sources */,
+				B622A375211A502E00D71B6A /* PostDetailTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
