@@ -58,6 +58,9 @@ class PostDetailTableViewController: UITableViewController {
             guard let post = self.post, let text = commentText?.text, !text.isEmpty, text != " " else { return }
             PostController.shared.addComment(toPost: post, withText: text, completion: { (_) in
             })
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)

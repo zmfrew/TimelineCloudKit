@@ -10,7 +10,10 @@ import UIKit
 
 class AddPostTableViewController: UITableViewController {
 
-    // MARK: - Properties
+    // MARK: - Outlets
+    @IBOutlet weak var selectImageButton: UIButton!
+    @IBOutlet weak var potentialPostIV: UIImageView!
+    @IBOutlet weak var captionText: UITextField!
     
     // MARK: - LifeCycle Methods
     override func viewDidLoad() {
@@ -18,70 +21,42 @@ class AddPostTableViewController: UITableViewController {
     }
     
     // MARK: - Actions
+    @IBAction func selectImageButtonTapped(_ sender: UIButton) {
+        selectImageButton.setTitle("", for: .normal)
+        potentialPostIV.image = UIImage(named: "photo")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
     
-    // MARK: - TableViewDataSource
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+    @IBAction func addPostButtonTapped(_ sender: UIButton) {
+        guard let image = potentialPostIV.image,
+            let text = captionText.text, !text.isEmpty, text != " " else {
+                presentAlertController()
+                return
+        }
+        
+        PostController.shared.createPostWith(image: image, andCaption: text) { (_) in
+            guard let tbController = self.navigationController?.parent as? UITabBarController else { return }
+            DispatchQueue.main.async {
+                tbController.selectedIndex = 0
+            }
+        }
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    
+    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        guard let tbController = self.navigationController?.parent as? UITabBarController else { return }
+        DispatchQueue.main.async {
+            tbController.selectedIndex = 0
+        }
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    
+    // MARK: - Instance Methods
+    func presentAlertController() {
+        let alertController = UIAlertController(title: "Oops!", message: "Please ensure you have an image and a caption before posting!", preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        alertController.addAction(dismissAction)
+        present(alertController, animated: true, completion: nil)
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+  
 }

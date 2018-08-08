@@ -27,9 +27,10 @@ class PostController {
     func createPostWith(image: UIImage, andCaption text: String, completion: @escaping (Post?) -> Void) {
         guard let imageData = UIImageJPEGRepresentation(image, 1) else { return }
         let post = Post(photoData: imageData)
-        addComment(toPost: post, withText: text) { (comment) in
-            print(comment ?? "No comment posted.")
+        addComment(toPost: post, withText: text) { (_) in
+            
         }
+        posts.append(post)
         completion(post)
     }
  
