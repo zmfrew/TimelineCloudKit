@@ -15,6 +15,8 @@
 		B622A37B211A51BA00D71B6A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622A37A211A51BA00D71B6A /* Post.swift */; };
 		B622A37D211A560700D71B6A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622A37C211A560700D71B6A /* Comment.swift */; };
 		B622A381211A58BC00D71B6A /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622A380211A58BC00D71B6A /* PostController.swift */; };
+		B622A383211A5F0D00D71B6A /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622A382211A5F0D00D71B6A /* PostTableViewCell.swift */; };
+		B622A385211A69AF00D71B6A /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622A384211A69AF00D71B6A /* DateHelper.swift */; };
 		B62C48E6211A4DB200243FE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62C48E5211A4DB200243FE1 /* AppDelegate.swift */; };
 		B62C48EB211A4DB200243FE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62C48E9211A4DB200243FE1 /* Main.storyboard */; };
 		B62C48ED211A4DB300243FE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62C48EC211A4DB300243FE1 /* Assets.xcassets */; };
@@ -31,6 +33,8 @@
 		B622A37A211A51BA00D71B6A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		B622A37C211A560700D71B6A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		B622A380211A58BC00D71B6A /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
+		B622A382211A5F0D00D71B6A /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		B622A384211A69AF00D71B6A /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		B62C48E2211A4DB200243FE1 /* Timeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62C48E5211A4DB200243FE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B62C48EA211A4DB200243FE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -103,6 +107,7 @@
 		B62C48F7211A4DC000243FE1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B622A384211A69AF00D71B6A /* DateHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				B62C48E9211A4DB200243FE1 /* Main.storyboard */,
+				B622A382211A5F0D00D71B6A /* PostTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,9 +245,11 @@
 				B622A373211A4F7500D71B6A /* PostListTableViewController.swift in Sources */,
 				B622A379211A513300D71B6A /* SearchResultsTableViewController.swift in Sources */,
 				B622A37D211A560700D71B6A /* Comment.swift in Sources */,
+				B622A385211A69AF00D71B6A /* DateHelper.swift in Sources */,
 				B622A37B211A51BA00D71B6A /* Post.swift in Sources */,
 				B622A377211A509C00D71B6A /* AddPostTableViewController.swift in Sources */,
 				B622A375211A502E00D71B6A /* PostDetailTableViewController.swift in Sources */,
+				B622A383211A5F0D00D71B6A /* PostTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
