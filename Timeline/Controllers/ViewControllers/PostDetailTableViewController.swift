@@ -14,14 +14,20 @@ class PostDetailTableViewController: UITableViewController {
     @IBOutlet weak var postIV: UIImageView!
     
     // MARK: - Instance Properties
-    var post: Post?
+    var post: Post? {
+        didSet {
+            updateViews()
+        }
+    }
     
     // MARK: - LifeCycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 100
-        updateViews()
+        tableView.estimatedRowHeight = 44
+        NotificationCenter.default.addObserver(self, selector: #selector(updateViews), name: PostController.PostCommentsChangedNotification, object: nil)
+        guard let post = post else { return }
+        PostController.shared.fetchCommentsFor(post: post) { (_) in }
     }
 
     // MARK: - Actions
@@ -38,8 +44,9 @@ class PostDetailTableViewController: UITableViewController {
     }
     
     // MARK: - Instance Methods
-    func updateViews() {
+    @objc func updateViews() {
         guard let post = post else { return }
+        
         DispatchQueue.main.async {
             self.postIV.image = post.photo
             self.tableView.reloadData()
@@ -50,18 +57,19 @@ class PostDetailTableViewController: UITableViewController {
         var commentText: UITextField?
         let alertController = UIAlertController(title: nil, message: "Post a comment!", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
         alertController.addTextField { (textField) in
             textField.placeholder = "Enter comment..."
             commentText = textField
         }
+        
         let confirmAction = UIAlertAction(title: "Post", style: .default) { (_) in
-            guard let post = self.post, let text = commentText?.text, !text.isEmpty, text != " " else { return }
+            guard let post = self.post,
+                let text = commentText?.text, !text.isEmpty, text != " " else { return }
             PostController.shared.addComment(toPost: post, withText: text, completion: { (_) in
             })
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
         }
+        
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)

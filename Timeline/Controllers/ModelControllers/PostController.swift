@@ -14,8 +14,18 @@ class PostController {
     // MARK: - Singleton
     static let shared = PostController()
     
-    // MARK: - Properties
-    var posts: [Post] = []
+    // MARK: - Constants
+    static let PostsChangedNotification = Notification.Name("PostsChangedNotification")
+    static let PostCommentsChangedNotification = Notification.Name("PostCommentsChangedNotification")
+    
+    // MARK: - Instance Properties
+    var posts: [Post] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: PostController.PostsChangedNotification, object: self)
+            }
+        }
+    }
     
     // MARK: - CloudKit Properties
     let publicDB = CKContainer.default().publicCloudDatabase

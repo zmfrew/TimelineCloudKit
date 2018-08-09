@@ -20,7 +20,14 @@ class Post {
     // MARK: - Properties
     let photoData: Data?
     let timestamp: Date
-    var comments: [Comment]
+    var comments: [Comment] {
+        didSet {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: PostController.PostCommentsChangedNotification, object: self)
+            }
+        }
+    }
+    
     var photo: UIImage {
         guard let data = photoData, let image = UIImage(data: data) else { return UIImage(named: "photo")! }
         return image

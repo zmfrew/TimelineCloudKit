@@ -10,22 +10,39 @@ import UIKit
 
 class PostListTableViewController: UITableViewController {
     
-    // MARK: - Outlets
-    
     // MARK: - Instance Properties
     var searchController: UISearchController?
     
     // MARK: - LifeCycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpSearchController()
+        refreshPosts()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateViews), name: PostController.PostsChangedNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        refreshPosts()
+    }
+    
+    // MARK: - Instance Methods
+    func refreshPosts(_ completion: (() -> Void)? = nil) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        PostController.shared.fetchPosts { (success) in
+            if success {
+                DispatchQueue.main.async {
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                }
+            }
+            completion?()
+        }
+    }
+    
+    @objc func updateViews() {
         tableView.reloadData()
     }
     
-    // MARK: - Actions
     
     // MARK: - TableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
