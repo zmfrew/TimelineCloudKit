@@ -42,6 +42,7 @@ class PhotoSelectViewController: UIViewController, UIImagePickerControllerDelega
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        selectImageButton.setTitle("Select Image", for: UIControlState())
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
