@@ -12,8 +12,9 @@ import CloudKit
 class Post {
     
     // MARK: - Constant Keys
+    static let TypeKey = "Post"
     fileprivate static let PhotoDataKey = "photoData"
-    fileprivate static let TimestampKey = "timestamp"
+    static let TimestampKey = "timestamp"
     fileprivate static let CommentsKey = "comments"
     
     // MARK: - Properties
