@@ -17,22 +17,66 @@ class PostController {
     // MARK: - Properties
     var posts: [Post] = []
     
-    // MARK: - Methods
-    func addComment(toPost post: Post, withText text: String, completion: @escaping (Comment?) -> Void) {
-        let comment = Comment(text: text, post: post)
-        post.comments.append(comment)
-        completion(comment)
-    }
+    // MARK: - CloudKit Properties
+    let publicDB = CKContainer.default().publicCloudDatabase
     
+    // MARK: - Methods
     func createPostWith(image: UIImage, andCaption text: String, completion: @escaping (Post?) -> Void) {
         guard let imageData = UIImageJPEGRepresentation(image, 1) else { return }
+        
         let post = Post(photoData: imageData)
-        addComment(toPost: post, withText: text) { (_) in
+        let postRecord = post.cloudKitRecord
+        
+        CloudKitManager.shared.saveRecord(postRecord, database: publicDB) { (record, error) in
+            if let error = error {
+                print("Error occurred saving post: \(error.localizedDescription).")
+                completion(nil)
+                return
+            }
             
+            guard let record = record else { completion(nil) ; return }
+            
+            post.cloudKitRecordID = record.recordID
+            completion(post)
         }
+        
+        let comment = Comment(text: text, post: post)
+        let commentRecord = comment.cloudKitRecord
+        
+        CloudKitManager.shared.saveRecord(commentRecord, database: publicDB) { (record, error) in
+            if let error = error {
+                print("Error occurred saving comment to post: \(error.localizedDescription).")
+                completion(nil)
+                return
+            }
+            
+            guard let record = record else { completion(nil) ; return }
+            
+            comment.cloudKitRecordID = record.recordID
+            completion(post)
+        }
+        
         posts.append(post)
         completion(post)
     }
  
+    func addComment(toPost post: Post, withText text: String, completion: @escaping (Comment?) -> Void) {
+        let comment = Comment(text: text, post: post)
+        let commentRecord = comment.cloudKitRecord
+        
+        CloudKitManager.shared.saveRecord(commentRecord, database: publicDB) { (record, error) in
+            if let error = error {
+                print("Error occurred saving comment: \(error.localizedDescription).")
+                completion(nil)
+                return
+            }
+            
+            comment.cloudKitRecordID = record?.recordID
+            post.comments.append(comment)
+            completion(comment)
+        }
+    }
+    
+    
 }
 
