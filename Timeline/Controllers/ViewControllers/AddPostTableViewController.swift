@@ -16,7 +16,6 @@ class AddPostTableViewController: UITableViewController {
     // MARK: - Instance Properties
     var image: UIImage?
     
-
     // MARK: - Actions
     @IBAction func addPostButtonTapped(_ sender: UIButton) {
         guard let image = image,
@@ -26,7 +25,7 @@ class AddPostTableViewController: UITableViewController {
         }
         
         PostController.shared.createPostWith(image: image, andCaption: text) { (_) in
-            guard let tbController = self.navigationController?.parent as? UITabBarController else { self.presentAlertController(); return }
+            guard let tbController = self.navigationController?.parent as? UITabBarController else { return }
             DispatchQueue.main.async {
                 tbController.selectedIndex = 0
             }
@@ -48,7 +47,7 @@ class AddPostTableViewController: UITableViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    // MARK: - Navigatoin
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toPhotoSelector" {
             let destinationVC = segue.destination as? PhotoSelectViewController

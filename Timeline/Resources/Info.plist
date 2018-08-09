@@ -45,5 +45,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>&quot;Provide access so you can post your photos!&quot;</string>
+	<key>NSCameraUsageDescription</key>
+	<string>&quot;Provide access so you can take photos and post directly to Timeline!&quot;</string>
 </dict>
 </plist>

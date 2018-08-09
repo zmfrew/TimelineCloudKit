@@ -41,17 +41,17 @@ class PhotoSelectViewController: UIViewController, UIImagePickerControllerDelega
             }))
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         selectImageButton.setTitle("Select Image", for: UIControlState())
-        alertController.addAction(cancelAction)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            // delegate.photoSelectViewControllerSelected(image)
+            delegate?.photoSelectViewControllerSelected(image: image)
             selectImageButton.setTitle("", for: UIControlState())
             postIV.image = image
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

@@ -26,6 +26,7 @@
 		B6842E48211BA3D400FD526C /* SearchableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6842E47211BA3D400FD526C /* SearchableRecord.swift */; };
 		B6842E4A211BA64C00FD526C /* StringContainsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6842E49211BA64C00FD526C /* StringContainsExtension.swift */; };
 		B68F53BB211BE18C00999BBA /* PhotoSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68F53BA211BE18C00999BBA /* PhotoSelectViewController.swift */; };
+		B68F53BD211C8C9500999BBA /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68F53BC211C8C9500999BBA /* CloudKitManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		B6842E47211BA3D400FD526C /* SearchableRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableRecord.swift; sourceTree = "<group>"; };
 		B6842E49211BA64C00FD526C /* StringContainsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringContainsExtension.swift; sourceTree = "<group>"; };
 		B68F53BA211BE18C00999BBA /* PhotoSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectViewController.swift; sourceTree = "<group>"; };
+		B68F53BC211C8C9500999BBA /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				B622A380211A58BC00D71B6A /* PostController.swift */,
+				B68F53BC211C8C9500999BBA /* CloudKitManager.swift */,
 			);
 			path = ModelControllers;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				B622A37D211A560700D71B6A /* Comment.swift in Sources */,
 				B622A385211A69AF00D71B6A /* DateHelper.swift in Sources */,
 				B6842E46211B976800FD526C /* LaunchViewController.swift in Sources */,
+				B68F53BD211C8C9500999BBA /* CloudKitManager.swift in Sources */,
 				B622A37B211A51BA00D71B6A /* Post.swift in Sources */,
 				B622A377211A509C00D71B6A /* AddPostTableViewController.swift in Sources */,
 				B622A375211A502E00D71B6A /* PostDetailTableViewController.swift in Sources */,
