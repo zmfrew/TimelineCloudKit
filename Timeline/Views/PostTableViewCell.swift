@@ -9,7 +9,7 @@
 import UIKit
 
 class PostTableViewCell: UITableViewCell {
-
+    
     // MARK: - Outlets
     @IBOutlet weak var postIV: UIImageView!
     
@@ -23,9 +23,8 @@ class PostTableViewCell: UITableViewCell {
     // MARK: - Methods
     func updateViews() {
         guard let post = post else { return }
-        DispatchQueue.main.async {
-            self.postIV.image = post.photo            
-        }
+        
+        self.postIV.image = post.photo
     }
     
 }

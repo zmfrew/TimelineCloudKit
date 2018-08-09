@@ -49,6 +49,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="mCi-LQ-0Ke"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="03W-Z3-qLJ">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refreshControlActived:" destination="roU-Lv-mf2" eventType="valueChanged" id="ZQD-6l-72a"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r1Q-SA-iup" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -390,6 +396,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="tcl-8k-Abo"/>
+        <segue reference="ICP-T2-Ll5"/>
     </inferredMetricsTieBreakers>
 </document>

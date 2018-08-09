@@ -22,7 +22,8 @@ class PostController {
     var posts: [Post] = [] {
         didSet {
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: PostController.PostsChangedNotification, object: self)
+                let notification = NotificationCenter.default
+                notification.post(name: PostController.PostsChangedNotification, object: self)
             }
         }
     }
@@ -37,6 +38,8 @@ class PostController {
         let post = Post(photoData: imageData)
         let postRecord = post.cloudKitRecord
         
+        let comment = addComment(toPost: post, withText: text)
+        
         CloudKitManager.shared.saveRecord(postRecord, database: publicDB) { (record, error) in
             if let error = error {
                 print("Error occurred saving post: \(error.localizedDescription).")
@@ -50,7 +53,6 @@ class PostController {
             completion(post)
         }
         
-        let comment = Comment(text: text, post: post)
         let commentRecord = comment.cloudKitRecord
         
         CloudKitManager.shared.saveRecord(commentRecord, database: publicDB) { (record, error) in
@@ -70,7 +72,7 @@ class PostController {
         completion(post)
     }
  
-    func addComment(toPost post: Post, withText text: String, completion: @escaping (Comment?) -> Void) {
+    func addComment(toPost post: Post, withText text: String, completion: @escaping (Comment?) -> Void = {_ in }) -> Comment {
         let comment = Comment(text: text, post: post)
         let commentRecord = comment.cloudKitRecord
         
@@ -85,6 +87,7 @@ class PostController {
             post.comments.append(comment)
             completion(comment)
         }
+        return comment
     }
 
     func fetchCommentsFor(post: Post, completion: @escaping (Bool) -> Void) {
@@ -125,10 +128,8 @@ class PostController {
             
             for post in posts {
                 dispatchGroup.enter()
-                self.fetchCommentsFor(post: post, completion: { (success) in
-                    if success {
-                        dispatchGroup.leave()
-                    }
+                self.fetchCommentsFor(post: post, completion: { (_) in
+                    dispatchGroup.leave()
                 })
             }
             

@@ -18,12 +18,17 @@ class PostListTableViewController: UITableViewController {
         super.viewDidLoad()
         setUpSearchController()
         refreshPosts()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateViews), name: PostController.PostsChangedNotification, object: nil)
+        let notification = NotificationCenter.default
+        notification.addObserver(self, selector: #selector(updateViews), name: PostController.PostsChangedNotification, object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshPosts()
+    // MARK: - Actions
+    @IBAction func refreshControlActived(_ sender: UIRefreshControl) {
+        refreshPosts {
+            DispatchQueue.main.async {
+                self.refreshControl?.endRefreshing()
+            }
+        }
     }
     
     // MARK: - Instance Methods

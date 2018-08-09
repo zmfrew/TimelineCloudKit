@@ -20,11 +20,12 @@ class Comment {
     // MARK: - Properties
     let text: String
     let timestamp: Date
-    let post: Post
+    let post: Post?
     
     // MARK: - CloudKit Properties
     var cloudKitRecordID: CKRecordID?
     var cloudKitRecord: CKRecord {
+        guard let post = post else { fatalError() }
         let postRecordID = post.cloudKitRecordID ?? post.cloudKitRecord.recordID
         let recordID = cloudKitRecordID ?? CKRecordID(recordName: UUID().uuidString)
         let record = CKRecord(recordType: Comment.TypeKey, recordID: recordID)
@@ -35,7 +36,7 @@ class Comment {
     }
     
     // MARK: - Initializers
-    init(text: String, timestamp: Date = Date(), post: Post) {
+    init(text: String, timestamp: Date = Date(), post: Post?) {
         self.text = text
         self.timestamp = timestamp
         self.post = post
@@ -43,12 +44,11 @@ class Comment {
     
     init?(ckRecord: CKRecord) {
         guard let text = ckRecord[Comment.TextKey] as? String,
-            let timestamp = ckRecord[Comment.TimestampKey] as? Date,
-            let post = ckRecord[Comment.PostKey] as? Post else { return nil }
+            let timestamp = ckRecord[Comment.TimestampKey] as? Date else { return nil }
         
         self.text = text
         self.timestamp = timestamp
-        self.post = post
+        self.post = nil
         cloudKitRecordID = ckRecord.recordID
     }
     
