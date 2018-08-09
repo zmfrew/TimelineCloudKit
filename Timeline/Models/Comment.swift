@@ -14,8 +14,8 @@ class Comment {
     // MARK: - Constants
     static let TypeKey = "Comment"
     fileprivate static let TextKey = "text"
-    fileprivate static let TimestampKey = "timestamp"
-    fileprivate static let PostKey = "post"
+    static let TimestampKey = "timestamp"
+    static let PostKey = "post"
     
     // MARK: - Properties
     let text: String

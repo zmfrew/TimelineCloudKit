@@ -76,7 +76,58 @@ class PostController {
             completion(comment)
         }
     }
+
+    func fetchCommentsFor(post: Post, completion: @escaping (Bool) -> Void) {
+        let postReference = CKReference(record: post.cloudKitRecord, action: .deleteSelf)
+        let sortDescriptor = NSSortDescriptor(key: Comment.TimestampKey, ascending: false)
+        let predicate = NSPredicate(format: "%K == %@", Comment.PostKey, postReference)
+        
+        CloudKitManager.shared.fetchRecordsOfType(Comment.TypeKey, predicate: predicate, database: publicDB, sortDescriptors: [sortDescriptor]) { (records, error) in
+            if let error = error {
+                print("Error occurred fetching comments: \(error.localizedDescription).")
+                completion(false)
+                return
+            }
+            
+            guard let records = records else { completion(false) ; return }
+            
+            let comments = records.compactMap { Comment(ckRecord: $0) }
+            post.comments = comments
+            completion(true)
+        }
+    }
     
+    func fetchPosts(completion: @escaping(Bool) -> Void = {_ in }) {
+        let sortDescriptor = NSSortDescriptor(key: Post.TimestampKey, ascending: false)
+        
+        CloudKitManager.shared.fetchRecordsOfType(Post.TypeKey, database: publicDB, sortDescriptors: [sortDescriptor]) { (records, error) in
+            if let error = error {
+                print("Error occurred fetching posts: \(error.localizedDescription).")
+                completion(false)
+                return
+            }
+            
+            guard let records = records else { completion(false) ; return }
+            
+            let posts = records.compactMap { Post(record: $0) }
+            
+            let dispatchGroup = DispatchGroup()
+            
+            for post in posts {
+                dispatchGroup.enter()
+                self.fetchCommentsFor(post: post, completion: { (success) in
+                    if success {
+                        dispatchGroup.leave()
+                    }
+                })
+            }
+            
+            dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+                self.posts = posts
+                completion(true)                
+            })
+        }
+    }
     
 }
 
