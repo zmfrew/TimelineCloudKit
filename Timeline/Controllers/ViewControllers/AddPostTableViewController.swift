@@ -11,33 +11,22 @@ import UIKit
 class AddPostTableViewController: UITableViewController {
 
     // MARK: - Outlets
-    @IBOutlet weak var selectImageButton: UIButton!
-    @IBOutlet weak var potentialPostIV: UIImageView!
     @IBOutlet weak var captionText: UITextField!
     
-    // MARK: - LifeCycle Methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    // MARK: - Instance Properties
+    var image: UIImage?
     
+
     // MARK: - Actions
-    @IBAction func selectImageButtonTapped(_ sender: UIButton) {
-        selectImageButton.setTitle("", for: .normal)
-        potentialPostIV.image = UIImage(named: "photo")
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-    
     @IBAction func addPostButtonTapped(_ sender: UIButton) {
-        guard let image = potentialPostIV.image,
+        guard let image = image,
             let text = captionText.text, !text.isEmpty, text != " " else {
                 presentAlertController()
                 return
         }
         
         PostController.shared.createPostWith(image: image, andCaption: text) { (_) in
-            guard let tbController = self.navigationController?.parent as? UITabBarController else { return }
+            guard let tbController = self.navigationController?.parent as? UITabBarController else { self.presentAlertController(); return }
             DispatchQueue.main.async {
                 tbController.selectedIndex = 0
             }
@@ -58,5 +47,21 @@ class AddPostTableViewController: UITableViewController {
         alertController.addAction(dismissAction)
         present(alertController, animated: true, completion: nil)
     }
+    
+    // MARK: - Navigatoin
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toPhotoSelector" {
+            let destinationVC = segue.destination as? PhotoSelectViewController
+            destinationVC?.delegate = self
+        }
+    }
   
+}
+
+extension AddPostTableViewController: PhotoSelectViewControllerDelegate {
+    
+    func photoSelectViewControllerSelected(image: UIImage) {
+        self.image = image
+    }
+    
 }

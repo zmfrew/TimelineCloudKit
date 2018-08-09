@@ -38,7 +38,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="postIV" destination="Wnd-id-eok" id="XIw-Wv-3NN"/>
-                                    <segue destination="66w-qO-XHk" kind="show" identifier="toDetailVC" id="ICP-T2-Ll5"/>
+                                    <segue destination="66w-qO-XHk" kind="show" identifier="toPostDetail" id="ICP-T2-Ll5"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -71,26 +71,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="375.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jBR-JQ-x3q">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="375.5"/>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fG4-xa-1yg">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="375.5"/>
-                                                    <state key="normal" title="Select Image"/>
+                                                <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uZh-KB-aOZ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                                     <connections>
-                                                        <action selector="selectImageButtonTapped:" destination="mKJ-e4-t8e" eventType="touchUpInside" id="DyQ-e3-hdI"/>
+                                                        <segue destination="LfV-Mx-VAm" kind="embed" identifier="toPhotoSelector" id="g87-Vq-77Y"/>
                                                     </connections>
-                                                </button>
+                                                </containerView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="fG4-xa-1yg" secondAttribute="trailing" id="Fts-oo-OJS"/>
-                                                <constraint firstItem="fG4-xa-1yg" firstAttribute="leading" secondItem="rzh-Qa-Ci3" secondAttribute="leading" id="Hxt-UQ-8lH"/>
-                                                <constraint firstAttribute="bottom" secondItem="jBR-JQ-x3q" secondAttribute="bottom" id="doy-7m-G4Q"/>
-                                                <constraint firstItem="jBR-JQ-x3q" firstAttribute="leading" secondItem="rzh-Qa-Ci3" secondAttribute="leading" id="hTr-Qc-d2h"/>
-                                                <constraint firstItem="jBR-JQ-x3q" firstAttribute="top" secondItem="rzh-Qa-Ci3" secondAttribute="top" id="hs2-xw-T9X"/>
-                                                <constraint firstAttribute="bottom" secondItem="fG4-xa-1yg" secondAttribute="bottom" id="jyI-9Q-9f5"/>
-                                                <constraint firstAttribute="trailing" secondItem="jBR-JQ-x3q" secondAttribute="trailing" id="lqn-uh-n2I"/>
-                                                <constraint firstItem="fG4-xa-1yg" firstAttribute="top" secondItem="rzh-Qa-Ci3" secondAttribute="top" id="wGn-jb-f6v"/>
+                                                <constraint firstItem="uZh-KB-aOZ" firstAttribute="top" secondItem="rzh-Qa-Ci3" secondAttribute="top" id="2au-Of-sUm"/>
+                                                <constraint firstAttribute="bottom" secondItem="uZh-KB-aOZ" secondAttribute="bottom" id="MWD-cr-Qig"/>
+                                                <constraint firstAttribute="trailing" secondItem="uZh-KB-aOZ" secondAttribute="trailing" id="iOl-zW-heA"/>
+                                                <constraint firstItem="uZh-KB-aOZ" firstAttribute="leading" secondItem="rzh-Qa-Ci3" secondAttribute="leading" id="w7g-tX-ysz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -154,8 +146,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="captionText" destination="z70-om-adf" id="5tJ-Mf-M6K"/>
-                        <outlet property="potentialPostIV" destination="jBR-JQ-x3q" id="LSS-bF-w3x"/>
-                        <outlet property="selectImageButton" destination="fG4-xa-1yg" id="I1f-wl-iAY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kns-Xx-BQj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -269,18 +259,32 @@
         <scene sceneID="i2p-kb-7z3">
             <objects>
                 <tableViewController id="cCB-KR-rrU" customClass="SearchResultsTableViewController" customModule="Timeline" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dPX-nW-bhB">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="350" estimatedRowHeight="350" sectionHeaderHeight="28" sectionFooterHeight="28" id="dPX-nW-bhB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="94D-2b-Esb">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="resultCell" rowHeight="350" id="94D-2b-Esb">
+                                <rect key="frame" x="0.0" y="28" width="375" height="350"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="94D-2b-Esb" id="1ck-b3-yNQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="349.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WPO-oJ-8oo">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="349.5"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="WPO-oJ-8oo" firstAttribute="leading" secondItem="1ck-b3-yNQ" secondAttribute="leading" id="0hW-fl-ibQ"/>
+                                        <constraint firstItem="WPO-oJ-8oo" firstAttribute="top" secondItem="1ck-b3-yNQ" secondAttribute="top" id="Mcy-au-yP1"/>
+                                        <constraint firstAttribute="trailing" secondItem="WPO-oJ-8oo" secondAttribute="trailing" id="lQ9-Wu-JI1"/>
+                                        <constraint firstAttribute="bottom" secondItem="WPO-oJ-8oo" secondAttribute="bottom" id="vUn-w5-ta7"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="66w-qO-XHk" kind="show" identifier="toPostDetailFromSearch" id="tcl-8k-Abo"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -291,7 +295,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HTf-mh-ULF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1089" y="-577"/>
+            <point key="canvasLocation" x="1846" y="-612"/>
         </scene>
         <!--View Posts-->
         <scene sceneID="y8X-BD-T9e">
@@ -331,5 +335,49 @@
             </objects>
             <point key="canvasLocation" x="1089" y="917"/>
         </scene>
+        <!--Photo Select View Controller-->
+        <scene sceneID="4mO-nD-hTD">
+            <objects>
+                <viewController id="LfV-Mx-VAm" customClass="PhotoSelectViewController" customModule="Timeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mEG-LA-1Lj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5zz-Dx-AE2">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEJ-5p-Mcd">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                <state key="normal" title="Select Image"/>
+                                <connections>
+                                    <action selector="selectImageButtonTapped:" destination="LfV-Mx-VAm" eventType="touchUpInside" id="Zna-dK-8lO"/>
+                                    <action selector="selectImageButtonTapped:" destination="mKJ-e4-t8e" eventType="touchUpInside" id="ugN-FZ-NS9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="aEJ-5p-Mcd" secondAttribute="trailing" id="4tv-0a-EwQ"/>
+                            <constraint firstItem="aEJ-5p-Mcd" firstAttribute="top" secondItem="mEG-LA-1Lj" secondAttribute="top" id="S9k-tJ-nBl"/>
+                            <constraint firstAttribute="bottom" secondItem="5zz-Dx-AE2" secondAttribute="bottom" id="aeW-Fh-wMd"/>
+                            <constraint firstItem="5zz-Dx-AE2" firstAttribute="top" secondItem="mEG-LA-1Lj" secondAttribute="top" id="evg-bO-TiL"/>
+                            <constraint firstItem="5zz-Dx-AE2" firstAttribute="leading" secondItem="mEG-LA-1Lj" secondAttribute="leading" id="hB4-Ea-yLc"/>
+                            <constraint firstAttribute="trailing" secondItem="5zz-Dx-AE2" secondAttribute="trailing" id="mKL-xo-4oG"/>
+                            <constraint firstItem="aEJ-5p-Mcd" firstAttribute="leading" secondItem="mEG-LA-1Lj" secondAttribute="leading" id="nMs-6A-uoW"/>
+                            <constraint firstAttribute="bottom" secondItem="aEJ-5p-Mcd" secondAttribute="bottom" id="vLr-MP-AyJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="postIV" destination="5zz-Dx-AE2" id="eYE-Bj-9v4"/>
+                        <outlet property="selectImageButton" destination="aEJ-5p-Mcd" id="OMX-0K-NaY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k6e-Cq-pZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2679" y="916"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ICP-T2-Ll5"/>
+    </inferredMetricsTieBreakers>
 </document>

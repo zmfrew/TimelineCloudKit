@@ -28,3 +28,11 @@ class Post {
     }
     
 }
+
+extension Post: SearchableRecord {
+    
+    func matches(searchTerm: String) -> Bool {
+        return comments.contains { $0.text.contains(searchTerm) }
+    }
+    
+}

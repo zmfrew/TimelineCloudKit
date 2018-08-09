@@ -24,3 +24,11 @@ class Comment {
     }
     
 }
+
+extension Comment: SearchableRecord {
+    
+    func matches(searchTerm: String) -> Bool {
+        return text.lowercased().contains(searchTerm)
+    }
+    
+}
