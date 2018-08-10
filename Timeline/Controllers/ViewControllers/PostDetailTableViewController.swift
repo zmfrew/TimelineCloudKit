@@ -29,6 +29,7 @@ class PostDetailTableViewController: UITableViewController {
         
         let notification = NotificationCenter.default
         notification.addObserver(self, selector: #selector(fetchComments), name: PostController.PostCommentsChangedNotification, object: nil)
+        tableView.tableHeaderView?.autoresizingMask = []
         
         guard let post = post else { return }
         PostController.shared.fetchCommentsFor(post: post) { (_) in }
@@ -75,7 +76,9 @@ class PostDetailTableViewController: UITableViewController {
         let postAction = UIAlertAction(title: "Post", style: .default) { (_) in
             guard let post = self.post,
                 let text = commentText?.text, !text.isEmpty, text != " " else { return }
-            PostController.shared.addComment(toPost: post, withText: text) { _ in }
+            PostController.shared.addComment(toPost: post, withText: text) { _ in
+
+            }
         }
         
         alertController.addAction(postAction)
