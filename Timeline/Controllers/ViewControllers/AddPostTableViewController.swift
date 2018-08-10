@@ -27,6 +27,7 @@ class AddPostTableViewController: UITableViewController {
         PostController.shared.createPostWith(image: image, andCaption: text) { (_) in
             guard let tbController = self.navigationController?.parent as? UITabBarController else { return }
             DispatchQueue.main.async {
+                self.resignFirstResponder()
                 tbController.selectedIndex = 0
             }
         }

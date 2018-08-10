@@ -80,6 +80,7 @@ class PostDetailTableViewController: UITableViewController {
             
             PostController.shared.addComment(toPost: post, withText: text)
             DispatchQueue.main.async {
+                self.resignFirstResponder()
                 PostController.shared.fetchCommentsFor(post: post)
                 self.tableView.reloadData()
             }
