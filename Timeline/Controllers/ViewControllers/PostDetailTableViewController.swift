@@ -25,14 +25,15 @@ class PostDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 44
+        tableView.estimatedRowHeight = 40
+        
+        updateViews()
         
         let notification = NotificationCenter.default
         notification.addObserver(self, selector: #selector(fetchComments), name: PostController.PostCommentsChangedNotification, object: nil)
-        tableView.tableHeaderView?.autoresizingMask = []
         
         guard let post = post else { return }
-        PostController.shared.fetchCommentsFor(post: post) { (_) in }
+        PostController.shared.fetchCommentsFor(post: post)
     }
 
     // MARK: - Actions
@@ -60,24 +61,27 @@ class PostDetailTableViewController: UITableViewController {
     
     @objc func fetchComments() {
         guard let post = post else { return }
-        PostController.shared.fetchCommentsFor(post: post, completion: { _ in })
+        
+        PostController.shared.fetchCommentsFor(post: post)
     }
     
     func presentAlertController() {
-        var commentText: UITextField?
-        let alertController = UIAlertController(title: nil, message: "Post a comment!", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Add a comment!", message: nil, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addTextField { (textField) in
             textField.placeholder = "Enter comment..."
-            commentText = textField
         }
         
         let postAction = UIAlertAction(title: "Post", style: .default) { (_) in
             guard let post = self.post,
-                let text = commentText?.text, !text.isEmpty, text != " " else { return }
-            PostController.shared.addComment(toPost: post, withText: text) { _ in
-
+                let text = alertController.textFields?.first?.text,
+                !text.isEmpty, text != " " else { return }
+            
+            PostController.shared.addComment(toPost: post, withText: text)
+            DispatchQueue.main.async {
+                PostController.shared.fetchCommentsFor(post: post)
+                self.tableView.reloadData()
             }
         }
         
@@ -88,7 +92,7 @@ class PostDetailTableViewController: UITableViewController {
     
     // MARK: - TableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return post?.comments.count ?? 1
+        return post?.comments.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

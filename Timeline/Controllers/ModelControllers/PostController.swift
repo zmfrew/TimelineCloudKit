@@ -38,6 +38,8 @@ class PostController {
         let post = Post(photoData: imageData)
         let postRecord = post.cloudKitRecord
         
+        posts.insert(post, at: 0)
+        
         let comment = addComment(toPost: post, withText: text)
         
         CloudKitManager.shared.saveRecord(postRecord, database: publicDB) { (record, error) in
@@ -68,7 +70,6 @@ class PostController {
             completion(post)
         }
         
-        posts.append(post)
         completion(post)
     }
  
@@ -76,6 +77,8 @@ class PostController {
         let comment = Comment(text: text, post: post)
         let commentRecord = comment.cloudKitRecord
         
+        post.comments.insert(comment, at: 0)
+
         CloudKitManager.shared.saveRecord(commentRecord, database: publicDB) { (record, error) in
             if let error = error {
                 print("Error occurred saving comment: \(error.localizedDescription).")
@@ -84,13 +87,12 @@ class PostController {
             }
             
             comment.cloudKitRecordID = record?.recordID
-            post.comments.append(comment)
             completion(comment)
         }
         return comment
     }
 
-    func fetchCommentsFor(post: Post, completion: @escaping (Bool) -> Void) {
+    func fetchCommentsFor(post: Post, completion: @escaping (() -> Void) = {}) {
         let postReference = CKReference(record: post.cloudKitRecord, action: .deleteSelf)
         let sortDescriptor = NSSortDescriptor(key: Comment.TimestampKey, ascending: false)
         let predicate = NSPredicate(format: "%K == %@", Comment.PostKey, postReference)
@@ -98,15 +100,15 @@ class PostController {
         CloudKitManager.shared.fetchRecordsOfType(Comment.TypeKey, predicate: predicate, database: publicDB, sortDescriptors: [sortDescriptor]) { (records, error) in
             if let error = error {
                 print("Error occurred fetching comments: \(error.localizedDescription).")
-                completion(false)
+                completion()
                 return
             }
             
-            guard let records = records else { completion(false) ; return }
+            guard let records = records else { completion() ; return }
             
             let comments = records.compactMap { Comment(ckRecord: $0) }
             post.comments = comments
-            completion(true)
+            completion()
         }
     }
     
@@ -128,7 +130,7 @@ class PostController {
             
             for post in posts {
                 dispatchGroup.enter()
-                self.fetchCommentsFor(post: post, completion: { (_) in
+                self.fetchCommentsFor(post: post, completion: { 
                     dispatchGroup.leave()
                 })
             }
