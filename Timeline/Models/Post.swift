@@ -78,7 +78,8 @@ class Post {
 extension Post: SearchableRecord {
     
     func matches(searchTerm: String) -> Bool {
-        return comments.contains { $0.text.contains(searchTerm) }
+        let commentMatches = comments.filter { $0.text.contains(searchTerm) }
+        return !commentMatches.isEmpty
     }
     
 }

@@ -13,7 +13,7 @@ class Comment {
     
     // MARK: - Constants
     static let TypeKey = "Comment"
-    fileprivate static let TextKey = "text"
+    static let TextKey = "text"
     static let TimestampKey = "timestamp"
     static let PostKey = "post"
     
@@ -57,7 +57,7 @@ class Comment {
 extension Comment: SearchableRecord {
     
     func matches(searchTerm: String) -> Bool {
-        return text.lowercased().contains(searchTerm)
+        return text.lowercased().contains(searchTerm.lowercased())
     }
     
 }
