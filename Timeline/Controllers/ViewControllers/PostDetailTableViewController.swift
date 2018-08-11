@@ -12,6 +12,7 @@ class PostDetailTableViewController: UITableViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var postIV: UIImageView!
+    @IBOutlet weak var followPostButton: UIButton!
     
     // MARK: - Instance Properties
     var post: Post? {
@@ -28,7 +29,7 @@ class PostDetailTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 40
         
         updateViews()
-        
+
         let notification = NotificationCenter.default
         notification.addObserver(self, selector: #selector(fetchComments), name: PostController.PostCommentsChangedNotification, object: nil)
         
@@ -46,7 +47,10 @@ class PostDetailTableViewController: UITableViewController {
     }
     
     @IBAction func followPostButtonTapped(_ sender: UIButton) {
-    
+        guard let post = post else { return }
+        PostController.shared.toggleSubscriptionTo(commentsForPost: post) { (_, _, _) in
+            self.updateViews()
+        }
     }
     
     // MARK: - Instance Methods
@@ -56,6 +60,16 @@ class PostDetailTableViewController: UITableViewController {
         DispatchQueue.main.async {
             self.postIV.image = post.photo
             self.tableView.reloadData()
+        }
+        
+        PostController.shared.checkSubscriptionTo(commentsForPost: post) { (subscribed) in
+            self.updatePostButton(with: subscribed)
+        }
+    }
+    
+    func updatePostButton(with status: Bool) {
+        DispatchQueue.main.async {
+            self.followPostButton.setTitle(status ? "Unfollow Post" : "Follow Post", for: .normal)
         }
     }
     
@@ -89,6 +103,17 @@ class PostDetailTableViewController: UITableViewController {
         alertController.addAction(postAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func presentActivityViewController() {
+        
+        guard let photo = post?.photo,
+            let comment = post?.comments.first else { return }
+        
+        let text = comment.text
+        let activityViewController = UIActivityViewController(activityItems: [photo, text], applicationActivities: nil)
+        
+        present(activityViewController, animated: true, completion: nil)
     }
     
     // MARK: - TableViewDataSource

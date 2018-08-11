@@ -199,39 +199,33 @@ class PostController {
         }
     }
     
-    func checkSubscriptionToPostComments(post: Post, completion: @escaping(_ subscribed: Bool) -> Void) {
+    func checkSubscriptionTo(commentsForPost post: Post, completion: @escaping ((_ subscribed: Bool) -> Void) = {_ in}) {
         guard let subscriptionID = post.cloudKitRecordID?.recordName else { completion(false) ; return }
         
         CloudKitManager.shared.fetchSubscription(subscriptionID, database: publicDB) { (subscription, error) in
-            if let error = error {
-                print("Error occurred fetching subscription status on post: \(error.localizedDescription).")
-                completion(false)
-                return
-            }
-            
             let subscriptionStatus = subscription != nil
             completion(subscriptionStatus)
         }
     }
     
-    func toggleSubscriptionTo(commentsForPost post: Post, completion: @escaping(_ success: Bool, _ isSubscribed: Bool, _ error: Error?) -> Void) {
-        guard let subscriptionID = post.cloudKitRecordID?.recordName else { completion(false, false, nil) ; return }
+    func toggleSubscriptionTo(commentsForPost post: Post,
+                              completion: @escaping ((_ success: Bool, _ isSubscribed: Bool, _ error: Error?) -> Void) = { _,_,_ in }) {
         
-        CloudKitManager.shared.fetchSubscription(subscriptionID, database: publicDB) { (subscription, error ) in
-            if let error = error {
-                print("Error occurred fetching subscription status on post: \(error.localizedDescription).")
-                completion(false, false, nil)
-                return
-            }
+        guard let subscriptionID = post.cloudKitRecordID?.recordName else {
+            completion(false, false, nil)
+            return
+        }
+        
+        CloudKitManager.shared.fetchSubscription(subscriptionID, database: publicDB) { (subscription, error) in
             
             if subscription != nil {
-                self.removeSubscriptionTo(commentsForPost: post, completion: { (success, error) in
+                self.removeSubscriptionTo(commentsForPost: post) { (success, error) in
                     completion(success, false, error)
-                })
+                }
             } else {
-                self.addSubscriptionTo(commentsForPost: post, alertBody: "Check out the new comment on a post you follow!", completion: { (success, error) in
+                self.addSubscriptionTo(commentsForPost: post, alertBody: "Someone commented on a post you follow! 👍") { (success, error) in
                     completion(success, true, error)
-                })
+                }
             }
         }
     }

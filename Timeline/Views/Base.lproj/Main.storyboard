@@ -250,6 +250,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="followPostButton" destination="O4D-5h-Xf9" id="7b2-24-UMk"/>
                         <outlet property="postIV" destination="10w-5E-oRo" id="bag-NP-XlH"/>
                     </connections>
                 </tableViewController>
